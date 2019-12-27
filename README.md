@@ -10,40 +10,30 @@ The lights turn on individually and a screenshot is captured for each. These fou
 
 ![](animation.gif)
 
-The "ground truth" value for the images is a normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a photorealistic way.
+A labeled data set is created with the simulated images and their corresponding normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information can be found here: 
 
 ![](NormalSurface.png)
 
 ## Finding Textures Online
 
-The training data is composed of high resolution textures with normals from sources like https://www.substance3d.com/ or https://3dtextures.me) 
+The training data is composed of high resolution textures with normals from sources like https://www.substance3d.com/. 
 
-Web scraper to search for training data from
-
-Augment the images to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping) 
-
-create latent space animation?
-
-DCGAN to latent space, interpolation between textures, run textures through map estimator
+A web scraper is created to find training on a websites that provide free textures
+- https://3dtextures.me 
+- https://cc0textures.com/
+- https://www.cgbookcase.com/
+- https://texturehaven.com/textures/
 
 - `webscrape.py`
 
-afterwards run gdrive_download.py --file download_links.txt --dir train
+To download folders from a list of google drive links use: 
 
-Sift through the data set
-
-Create a sample blender scene and render training images from different perspectives?
+    gdrive_download.py --file download_links.txt --dir train
 
 ## Machine learning model 
+Augment the images to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping). This is done in Unity 
 
-Common practice of augmenting your images to produce larger training data sets (e.g. Augmentor)
-4 image input, simulating LEDs at different angles
+Multi-input, single output CNN 
 
-LSTM video feed to single image output
-
-More free textures: 
-    https://cc0textures.com/
-    https://www.cgbookcase.com/
-    https://texturehaven.com/textures/
-
-
+INPUT: 4 images 640 x 480 corresponding to light from 4 different angles
+OUTPUT: 1 image 640 x 480 px corresponding to a normal map
