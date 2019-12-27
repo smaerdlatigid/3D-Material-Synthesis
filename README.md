@@ -11,9 +11,13 @@ The lights turn on individually and a screenshot is captured for each. These fou
 
 ![](animation.gif)
 
-A labeled data set is created with the simulated images and their corresponding normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information can be found here: https://docs.unity3d.com/Manual/StandardShaderMaterialParameterNormalMap.html
+A labeled data set is created with the simulated images and their corresponding normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information about normal maps be found here: https://docs.unity3d.com/Manual/StandardShaderMaterialParameterNormalMap.html
 
 ![](NormalSurface.png)
+
+Here is the difference between a surface with and without a normal map while being illuminated with a directional light at 45 degrees 
+
+![](normal_anim.gif)
 
 ## Finding Textures Online
 
@@ -45,3 +49,5 @@ OUTPUT: 1 image 640 x 480 px corresponding to a normal map
 
 ## Real World Application
 We want to take this project into the real world. We are working on building a tripod light structure using a bluetooth controlled arduino and some LED strips. An app will allow you to run through the lighting sequence on your phone and capture data in the real world similar to how it was set up in Unity. This will allow one to create photo-realistic materials using their cell-phone camera and an easy to build light stand. 
+
+Perhaps an LED ring is better than strips on the legs
