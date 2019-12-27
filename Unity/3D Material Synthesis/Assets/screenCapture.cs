@@ -76,6 +76,12 @@ public class screenCapture : MonoBehaviour
         filename = string.Format("{0}\\texture_{1}_num.png", filepath, 0);
         ScreenCapture.CaptureScreenshot(filename);
         yield return new WaitForSeconds(0.5f);
+
+        // change albedo to normal map
+        Texture2D tex = material.GetTexture("_BumpMap");
+        material.SetTexture("_BaseMap", tex); 
+        material.SetFloat("_BumpScale", 0f);
+
         directional.SetActive(false);
 
         Debug.Log("Done Capturing");

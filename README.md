@@ -1,10 +1,24 @@
 # 3D Material Synthesis
-Estimate normal, height and occlusion maps from photographs with artificial intelligence.
+Estimate surface normals from a single view using multiple light sources and artificial intelligence.
 
-## Training Data
-Download high resolution textures with normals, height or occlusion maps (e.g. https://www.substance3d.com/)
+## Generate Training Data with Unity 
+4 point sources are placed around a scene to mimic LEDs on a tripod-like structure
 
-Web scraper to search for training data from https://3dtextures.me
+![](Screenshot.png)
+
+The lights turn on individually and a screenshot is captured for each. These four images are input into a convolutional neural network in order to estimate a normal map.
+
+![](animation.gif)
+
+The "ground truth" value for the images is a normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a photorealistic way.
+
+![](NormalSurface.png)
+
+## Finding Textures Online
+
+The training data is composed of high resolution textures with normals from sources like https://www.substance3d.com/ or https://3dtextures.me) 
+
+Web scraper to search for training data from
 
 Augment the images to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping) 
 
@@ -31,4 +45,5 @@ More free textures:
     https://cc0textures.com/
     https://www.cgbookcase.com/
     https://texturehaven.com/textures/
+
 
