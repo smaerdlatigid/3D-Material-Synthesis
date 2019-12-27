@@ -2,6 +2,7 @@
 Estimate surface normals from a single view using multiple light sources and artificial intelligence.
 
 ## Generate Training Data with Unity 
+
 4 point sources are placed around a scene to mimic LEDs on a tripod-like structure
 
 ![](Screenshot.png)
@@ -32,6 +33,8 @@ python webscrape.py --BASE_URL https://3dtextures.me/ --PATTERN https://drive
 To download folders from a list of google drive links use: 
 
     gdrive_download.py --file download_links.txt --dir train
+
+Use the script `ScreenCapture.cs` within Unity to generate samples for a CNN
 
 ## Machine learning model 
 Training data is augmented to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping).
