@@ -12,6 +12,8 @@ public class screenCapture : MonoBehaviour
     public float[] yAngles = {90,210,330};
 
     Vector3 pos; 
+    Quaternion rot; 
+
     GameObject obj;
     float r,h;
     Light lt;
@@ -42,23 +44,19 @@ public class screenCapture : MonoBehaviour
             );
             pos += surface.transform.position;
             obj = Instantiate(light, pos, Quaternion.identity);
-            obj.SetActive(false);
-            lights.Add(obj);
             lt = obj.GetComponent<Light>();
             lt.intensity = 0.1f;
 
             // Instatiate directional light
             /*
-            Euler angles to Qauter
-            (45,0,0)
-            (135,0,0)
-            (45,90,0)
-            (45,-90,0)
+            rot = Quaternion.Euler(45, 0, 0);
+            obj = Instantiate(light,light.transform.position, rot);
+            obj.SetActive(false);
+            lights.Add(obj);
             */
         }
         capturing = false;
         DisablePointSources();
-        // Create list of training images
     }
 
     void DisablePointSources()
@@ -75,6 +73,14 @@ public class screenCapture : MonoBehaviour
     int ti = 0;
     int augmentations = 50;
     int ai = -1;
+
+    /* 
+        Euler angles to Qauter
+        (45,0,0)
+        (135,0,0)
+        (45,90,0)
+        (45,-90,0)
+    */
 
     IEnumerator CaptureSequence()
     {
