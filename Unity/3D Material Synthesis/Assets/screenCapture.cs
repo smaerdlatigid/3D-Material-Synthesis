@@ -15,9 +15,18 @@ public class screenCapture : MonoBehaviour
     GameObject obj;
     float r,h;
     Light lt;
+
+    private Texture2D[] textures;
     
     void Start()
     {
+        textures = Resources.LoadAll<Texture2D>("Textures");
+        Debug.Log(textures.Length);
+        Debug.Log(textures[0].name);
+        Debug.Log(textures[1].name);
+        material.SetTexture("_BaseMap", textures[0]);
+        material.SetTexture("_BumpMap", textures[1]);
+
         lights = new List<GameObject>();
         lights.Add(light);
 
@@ -55,6 +64,8 @@ public class screenCapture : MonoBehaviour
     public string filepath = "C:\\Users\\Kyle\\Programs\\github\\PhotoMaterialSynthesis\\Unity";
     string filename;
     bool capturing = false;
+    int ti = 0;
+    public int augmentations = 100;
 
     IEnumerator CaptureSequence()
     {
@@ -78,27 +89,40 @@ public class screenCapture : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         // change albedo to normal map
-        Texture2D tex = material.GetTexture("_BumpMap");
-        material.SetTexture("_BaseMap", tex); 
-        material.SetFloat("_BumpScale", 0f);
+        material.SetTexture("_BaseMap", textures[2*ti+1]);
+        material.SetTexture("_BumpMap", null);
+        filename = string.Format("{0}\\texture_{1}_num.png", filepath, 4);
+        ScreenCapture.CaptureScreenshot(filename);
 
-        directional.SetActive(false);
-
+        yield return new WaitForSeconds(0.25f);
         Debug.Log("Done Capturing");
+        capturing=false;
     }
+    public int ai = -1; 
     void Update()
     {
-        if(capturing)
+        if (capturing)
         {
-            // apply random transformation to texture
-            // loop through training materials
+            
         }
         else
         {
-            StartCoroutine(CaptureSequence());
-            capturing = true;
+            if (ti<textures.Length/2){
+                ai += 1; 
+                if (ai >= augmentations)
+                {
+                    ai = 0;
+                    ti +=1;
+                }
+                material.SetTexture("_BaseMap", textures[2*ti]);
+                material.SetTexture("_BumpMap", textures[2*ti+1]);
+                material.SetFloat("_BumpScale", 1f);
+                material.SetTextureOffset("_BaseMap", new Vector2(Random.value, Random.value));
+                material.SetTextureScale("_BaseMap",new Vector2(0.5f * Random.value + 0.75f, 0.5f * Random.value + 0.75f));
+                StartCoroutine(CaptureSequence());
+                capturing = true;
+            }
         }
-        
     }
 
     /******************************************************************/

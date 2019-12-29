@@ -36,18 +36,24 @@ python webscrape.py --BASE_URL https://3dtextures.me/ --PATTERN https://drive
 
 To download folders from a list of google drive links use: 
 
-    gdrive_download.py --file download_links.txt --dir train
+    python gdrive_download.py --file download_links.txt --dir train
 
-Use the script `ScreenCapture.cs` within Unity to generate samples for a CNN
+Format the data and then import the directory `train/Textures/` into Unity
+
+    python format_data.py   
+
+Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping).
 
 ## Machine learning model 
-Training data is augmented to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping).
 
 INPUT: 4 images 640 x 480 corresponding to light from 4 different angles
 
-OUTPUT: 1 image 640 x 480 px corresponding to a normal map
+OUTPUT: 1 image 640 x 480 px corresponding to a normal map (a grayscale image)
+
+The height map is then converted to a normal map using the formula: 
+`
+https://docs.unity3d.com/Packages/com.unity.shadergraph@5.7/manual/Normal-From-Height-Node.html
+and in a custom shader graph 
 
 ## Real World Application
-We want to take this project into the real world. We are working on building a tripod light structure using a bluetooth controlled arduino and some LED strips. An app will allow you to run through the lighting sequence on your phone and capture data in the real world similar to how it was set up in Unity. This will allow one to create photo-realistic materials using their cell-phone camera and an easy to build light stand. 
-
-Perhaps an LED ring is better than strips on the legs
+We are working on building a tripod light structure using a bluetooth controlled arduino and some LED strips in order to mimic our Unity simulation. A mobile app will allow you to run through the lighting sequence on your phone and capture data in the real world similar to how it was set up in Unity. This will allow one to create photo-realistic materials using their cellphone camera and an easy to build light stand. 
