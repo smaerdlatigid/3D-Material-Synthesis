@@ -1,9 +1,9 @@
 # 3D Material Synthesis
-Estimate surface normals from a single view using multiple light sources and artificial intelligence.
+Estimate high resolution surface normals from a single view using multiple light sources and artificial intelligence.
 
 ## Generate Training Data with Unity 
 
-4 point sources are placed around a scene to mimic LEDs on a tripod-like structure
+4 light sources are placed around a scene to mimic LEDs on a tripod-like structure
 
 ![](Figures/Screenshot.png)
 
@@ -50,6 +50,8 @@ Use the script `ScreenCapture.cs` within Unity to generate training samples for 
 
 INPUT: 4 images 480 x 320 corresponding to light from 4 different angles
 
+*image
+
 OUTPUT: 1 image 480 x 320 px corresponding to a normal map (a grayscale image)
 
 ```
@@ -68,7 +70,7 @@ We are working on building a tripod light structure using a bluetooth controlled
 
 ## Use Cases
 - Create photo-realistic textures for motion pictures and video games
-- Estimate a height map from geostationary satellite images by integrating the normal map. Images must be taken hours apart while the sun is at different angles. The algorithm needs to be retrained using a directional light source which takes into account your latitude on the Earth
+- Estimate a height map from geostationary satellite images by integrating the normal map. Images must be taken hours apart while the sun is at different angles. The algorithm needs to be retrained using a directional light source with the correct geometry based on your location.
 
 ### License
 This software is intended strictly for educational purposes. Please cite this work if you use any of these algorithms for your project. Licensing fees may apply for any use beyond educational purposes, please contact support@digitaldream.io for more information

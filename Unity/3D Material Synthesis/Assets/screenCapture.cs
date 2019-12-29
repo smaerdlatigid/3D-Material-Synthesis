@@ -7,15 +7,19 @@ public class screenCapture : MonoBehaviour
     public GameObject light;
     public GameObject surface; 
     public Material material;
-    public GameObject directional; 
     public List<GameObject> lights; 
-    public float[] yAngles = {90,210,330};
+
+    public Vector3[] angles = {
+        new Vector3(45,0,0),
+        new Vector3(135,0,0),
+        new Vector3(45,90,0),
+        new Vector3(45,-90,0)
+    };
 
     Vector3 pos; 
     Quaternion rot; 
 
     GameObject obj;
-    float r,h;
     Light lt;
 
     private Texture2D[] textures;
@@ -24,42 +28,24 @@ public class screenCapture : MonoBehaviour
     {
         textures = Resources.LoadAll<Texture2D>("Textures");
         Debug.Log(textures.Length);
-        Debug.Log(textures[0].name);
-        Debug.Log(textures[1].name);
         material.SetTexture("_BaseMap", textures[0]);
         material.SetTexture("_BumpMap", textures[1]);
 
         lights = new List<GameObject>();
         lights.Add(light);
 
-        for(int y=0; y<yAngles.Length; y++)
+        for (int a=0; a<angles.Length; a++)
         {
-            // Instatiate point sources
-            h = light.transform.position.y * 0.35f;
-            r = h * Mathf.Tan(2 * 3.14159f * 30 / 360f); // tripod angle 
-            pos = new Vector3(
-                r * Mathf.Cos(2 * 3.14159f * yAngles[y] / 360f),
-                light.transform.position.y - h, 
-                r * Mathf.Sin(2*3.14159f*yAngles[y]/360f)
-            );
-            pos += surface.transform.position;
-            obj = Instantiate(light, pos, Quaternion.identity);
-            lt = obj.GetComponent<Light>();
-            lt.intensity = 0.1f;
-
-            // Instatiate directional light
-            /*
-            rot = Quaternion.Euler(45, 0, 0);
+            rot = Quaternion.Euler(angles[a]);
             obj = Instantiate(light,light.transform.position, rot);
             obj.SetActive(false);
             lights.Add(obj);
-            */
         }
         capturing = false;
-        DisablePointSources();
+        DisableLightSources();
     }
 
-    void DisablePointSources()
+    void DisableLightSources()
     {
         for (int i = 0; i < lights.Count; i++)
         {
@@ -71,48 +57,34 @@ public class screenCapture : MonoBehaviour
     string filename;
     bool capturing = false;
     int ti = 0;
-    int augmentations = 50;
+    int augmentations = 10;
     int ai = -1;
-
-    /* 
-        Euler angles to Qauter
-        (45,0,0)
-        (135,0,0)
-        (45,90,0)
-        (45,-90,0)
-    */
 
     IEnumerator CaptureSequence()
     {
-        DisablePointSources();
-        directional.SetActive(false);
+        DisableLightSources();
 
         for (int i = 0; i < lights.Count; i++)
         {
             lights[i].SetActive(true);
-            filename = string.Format("{0}\\texture_{1}_{2}_color{3}.png", filepath, ti, ai, i.ToString());
+            filename = string.Format("{0}\\texture{1}_{2}_color{3}.png", filepath, ti, ai, i.ToString());
             ScreenCapture.CaptureScreenshot(filename);
-            yield return new WaitForSeconds(0.25f); 
+            yield return new WaitForSeconds(0.5f); 
             Debug.Log(filename+" captured.");
             lights[i].SetActive(false);
         }
 
-        // Turn on Directional
-        directional.SetActive(true);
-        filename = string.Format("{0}\\texture_{1}_{2}_color{3}.png", filepath, ti, ai, 0);
-        ScreenCapture.CaptureScreenshot(filename);
-        yield return new WaitForSeconds(0.25f);
-
         // change albedo to normal map
+        lights[0].SetActive(true);
         material.SetTexture("_BaseMap", textures[2*ti+1]);
         material.SetTexture("_BumpMap", null);
-        filename = string.Format("{0}\\texture_{1}_{2}_normal.png", filepath, ti, ai);
+        filename = string.Format("{0}\\texture{1}_{2}_normal.png", filepath, ti, ai);
         ScreenCapture.CaptureScreenshot(filename);
-
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Done Capturing");
         capturing=false;
     }
+
     Vector2 offset, scale;
     void Update()
     {
@@ -122,7 +94,7 @@ public class screenCapture : MonoBehaviour
         }
         else
         {
-            if (ti<textures.Length/2){
+            if (ti<textures.Length/2-1){
                 ai += 1; 
                 if (ai >= augmentations)
                 {
@@ -143,6 +115,4 @@ public class screenCapture : MonoBehaviour
             }
         }
     }
-    
-    /******************************************************************/
 }

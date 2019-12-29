@@ -249,15 +249,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbe53e9ce193574594347960cf1c06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 708936251}
+  light: {fileID: 1082368200}
   surface: {fileID: 1267733378}
   material: {fileID: 2100000, guid: a2f3cb106b9a28d48b59833eaec1ee88, type: 2}
-  directional: {fileID: 1082368200}
   lights: []
-  yAngles:
-  - 90
-  - 210
-  - 330
+  angles:
+  - {x: 45, y: 0, z: 0}
+  - {x: 45, y: 120, z: 0}
+  - {x: 45, y: 240, z: 0}
   filepath: C:\Users\Kyle\Programs\github\PhotoMaterialSynthesis\TensorFlow\train\UnitySamples
 --- !u!1 &437921879
 GameObject:
@@ -461,7 +460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &708936252
 Light:
   m_ObjectHideFlags: 0
@@ -554,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1082368201
 Light:
   m_ObjectHideFlags: 0
