@@ -42,11 +42,19 @@ public class screenCapture : MonoBehaviour
             );
             pos += surface.transform.position;
             obj = Instantiate(light, pos, Quaternion.identity);
-            // obj.transform.SetParent(light.transform);
             obj.SetActive(false);
             lights.Add(obj);
             lt = obj.GetComponent<Light>();
-            lt.intensity = 0.1f; 
+            lt.intensity = 0.1f;
+
+            // Instatiate directional light
+            /*
+            Euler angles to Qauter
+            (45,0,0)
+            (135,0,0)
+            (45,90,0)
+            (45,-90,0)
+            */
         }
         capturing = false;
         DisablePointSources();
@@ -61,11 +69,12 @@ public class screenCapture : MonoBehaviour
         }
     }
 
-    public string filepath = "C:\\Users\\Kyle\\Programs\\github\\PhotoMaterialSynthesis\\Unity";
+    public string filepath = "C:\\Users\\Kyle\\Programs\\github\\PhotoMaterialSynthesis\\TensorFlow\\train\\UnitySamples";
     string filename;
     bool capturing = false;
     int ti = 0;
-    public int augmentations = 100;
+    int augmentations = 50;
+    int ai = -1;
 
     IEnumerator CaptureSequence()
     {
@@ -75,30 +84,30 @@ public class screenCapture : MonoBehaviour
         for (int i = 0; i < lights.Count; i++)
         {
             lights[i].SetActive(true);
-            filename = string.Format("{0}\\texture_{1}_num.png", filepath, i.ToString());
+            filename = string.Format("{0}\\texture_{1}_{2}_color{3}.png", filepath, ti, ai, i.ToString());
             ScreenCapture.CaptureScreenshot(filename);
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.25f); 
             Debug.Log(filename+" captured.");
             lights[i].SetActive(false);
         }
 
         // Turn on Directional
         directional.SetActive(true);
-        filename = string.Format("{0}\\texture_{1}_num.png", filepath, 0);
+        filename = string.Format("{0}\\texture_{1}_{2}_color{3}.png", filepath, ti, ai, 0);
         ScreenCapture.CaptureScreenshot(filename);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         // change albedo to normal map
         material.SetTexture("_BaseMap", textures[2*ti+1]);
         material.SetTexture("_BumpMap", null);
-        filename = string.Format("{0}\\texture_{1}_num.png", filepath, 4);
+        filename = string.Format("{0}\\texture_{1}_{2}_normal.png", filepath, ti, ai);
         ScreenCapture.CaptureScreenshot(filename);
 
         yield return new WaitForSeconds(0.25f);
         Debug.Log("Done Capturing");
         capturing=false;
     }
-    public int ai = -1; 
+    Vector2 offset, scale;
     void Update()
     {
         if (capturing)
@@ -117,13 +126,17 @@ public class screenCapture : MonoBehaviour
                 material.SetTexture("_BaseMap", textures[2*ti]);
                 material.SetTexture("_BumpMap", textures[2*ti+1]);
                 material.SetFloat("_BumpScale", 1f);
-                material.SetTextureOffset("_BaseMap", new Vector2(Random.value, Random.value));
-                material.SetTextureScale("_BaseMap",new Vector2(0.5f * Random.value + 0.75f, 0.5f * Random.value + 0.75f));
+                offset = new Vector2(Random.value, Random.value);
+                scale = new Vector2(0.5f * Random.value + 0.75f, 0.5f * Random.value + 0.75f);
+                material.SetTextureOffset("_BaseMap",offset);
+                material.SetTextureScale("_BaseMap",scale);
+                material.SetTextureOffset("_BumpMap", offset);
+                material.SetTextureScale("_BumpMap", scale);
                 StartCoroutine(CaptureSequence());
                 capturing = true;
             }
         }
     }
-
+    
     /******************************************************************/
 }

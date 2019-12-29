@@ -42,13 +42,15 @@ Format the data and then import the directory `train/Textures/` into Unity
 
     python format_data.py   
 
-Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping).
+Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping). Set the file path before running the "TrainingSamples" scene. Ignore all moments Unity tries to conver the texture type to a normal map. The normal map will be set to the albedo/base map to generate a ground truth label and gets renders in a wierd manner if set to a normal map in the texture settings. 
+
+![](Figures/train_anim.gif)
 
 ## Machine learning model 
 
-INPUT: 4 images 640 x 480 corresponding to light from 4 different angles
+INPUT: 4 images 480 x 320 corresponding to light from 4 different angles
 
-OUTPUT: 1 image 640 x 480 px corresponding to a normal map (a grayscale image)
+OUTPUT: 1 image 480 x 320 px corresponding to a normal map (a grayscale image)
 
 The height map is then converted to a normal map using the formula: 
 `
