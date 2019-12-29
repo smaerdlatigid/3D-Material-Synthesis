@@ -5,19 +5,19 @@ Estimate surface normals from a single view using multiple light sources and art
 
 4 point sources are placed around a scene to mimic LEDs on a tripod-like structure
 
-![](Screenshot.png)
+![](Figures/Screenshot.png)
 
 The lights turn on individually and a screenshot is captured for each. These four images are input into a convolutional neural network in order to estimate a normal map.
 
-![](animation.gif)
+![](Figures/animation.gif)
 
 A labeled data set is created with the simulated images and their corresponding normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information about normal maps be found here: https://docs.unity3d.com/Manual/StandardShaderMaterialParameterNormalMap.html
 
-![](NormalSurface.png)
+![](Figures/NormalSurface.png)
 
 Here is the difference between a surface with and without a normal map while being illuminated with a directional light at 45 degrees 
 
-![](normal_anim.gif)
+![](Figures/normal_anim.gif)
 
 ## Finding Textures Online
 
