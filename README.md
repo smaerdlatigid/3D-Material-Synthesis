@@ -50,27 +50,70 @@ Use the script `ScreenCapture.cs` within Unity to generate training samples for 
 
 INPUT: 4 images 480 x 320 corresponding to light from 4 different angles
 
-*image
+OUTPUT: 1 image 480 x 320 px corresponding to a normal map
 
-OUTPUT: 1 image 480 x 320 px corresponding to a normal map (a grayscale image)
+![](Figures/texture_anim.gif)
 
+The architecture of the neural network is rather simple consisting of only a few convolutional layers. The neural network doesn't have to be super complex or require many layers because the input data is so similar to the output.
+
+*image of neural network architecture 
+
+Training was done by optimizing for the mean squared error using Adam with a batch size of 8 images. The neural network was trained with 1500 samples for 20 epochs on a GTX 1070 (total training time ~1 hour).
+
+![](Figures/normal_training.png)
+
+*color0, truth, prediction, residual mosaic 
+
+The model is built with TensorFlow 2.0
+
+```python
+from PIL import Image
+import matplotlib.pyplot as plt
+from model_train import build_cnn_encoder
+
+if __name__ == "__main__":
+
+    img = np.asarray(Image.open("test.jpg"))
+
+    encoder = build_cnn_encoder( 
+        input_dims=[(img.size[1],img.size[0],3)]*4, 
+        layer_sizes=[ (8,8,8) ]*4,
+        combined_layers = [8,8,8], 
+        output_dim=(img.size[1],img.size[0],3)
+    )
+
+    encoder.load_weights("encoder_weights.h5") 
+    output = encoder.predict([X0,X1,X2,X3])
+    
 ```
-glob images
-format training set
-cross-val for testing
-create NN architecture
-start training
-view model error vs training epoch
-view side by side comparison of predicted normal map
-create unity side by side comparison with a moving light source
-```
+
+* show unity comparison
 
 ## Real World Application
+
 We are working on building a tripod light structure using a bluetooth controlled arduino and some LED strips in order to mimic our Unity simulation. A mobile app will allow you to run through the lighting sequence on your phone and capture data in the real world similar to how it was set up in Unity. This will allow one to create photo-realistic materials using their cellphone camera and an easy to build light stand. 
+
+* Show picture of 2x4 and LED strip
 
 ## Use Cases
 - Create photo-realistic textures for motion pictures and video games
-- Estimate a height map from geostationary satellite images by integrating the normal map. Images must be taken hours apart while the sun is at different angles. The algorithm needs to be retrained using a directional light source with the correct geometry based on your location.
+- Estimate a height map from geostationary satellite images by integrating the normal map. Images must be taken hours apart while the sun is at different angles. The algorithm needs to be retrained using a directional light source with the correct geometry based on your location
+
+![]() 
+
+Image from the HiRISE instrument on the Mars Reconaissence Orbiter
 
 ### License
 This software is intended strictly for educational purposes. Please cite this work if you use any of these algorithms for your project. Licensing fees may apply for any use beyond educational purposes, please contact support@digitaldream.io for more information
+
+### Outstanding Research & Development
+- Optimize CNN
+    - architecture
+    - number of inputs
+    - merge layer
+
+- improve texture rendering 
+    - higher resolution
+    - curate textures for training
+    - include height map as vertex displacement
+    - simulate LED bar

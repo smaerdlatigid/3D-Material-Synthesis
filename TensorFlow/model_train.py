@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 from PIL import Image
+import matplotlib.pyplot as plt
 
 def build_cnn_encoder( input_dims=[ (128,128,3), (256,256,3)], 
                         layer_sizes=[ (16,16,16), (32,32) ],
@@ -44,13 +45,17 @@ if __name__ == "__main__":
 
     encoder = build_cnn_encoder( 
         input_dims=[(img.size[1],img.size[0],3)]*4, 
-        layer_sizes=[ (16,16,16) ]*4,
-        combined_layers = [32,32,32], 
-        dropout=0.25,  
+        layer_sizes=[ (8,8,8) ]*4,
+        combined_layers = [8,8,8], 
         output_dim=(img.size[1],img.size[0],3)
     )
 
     encoder.summary()
+
+    try:
+        encoder.load_weights("encoder_weights.h5")
+    except:
+        print('load weights failed')
     
     print('loading data...')
     X0 = np.zeros( (len(images), img.size[1], img.size[0], 3), dtype=np.float16 )
@@ -78,20 +83,20 @@ if __name__ == "__main__":
     history = encoder.fit(
         [X0,X1,X2,X3],
         y,
-        epochs=10, 
-        batch_size=4,
+        epochs=50, 
+        batch_size=8,
         shuffle=True,
         validation_split=0.1,
     )
 
     encoder.save_weights("encoder_weights.h5")
 
+    
     # Plot training & validation loss values
     f,ax = plt.subplots(1)
-    ax.plot(history.history['loss'])
-    ax.plot(history.history['val_loss'])
+    ax.plot(np.log2(history.history['loss']))
+    ax.plot(np.log2(history.history['val_loss']))
     ax.set_ylabel('Loss')
     ax.set_xlabel('Training Epoch')
     ax.legend(['Train', 'Test'], loc='upper left')
-    #plt.savefig('nn_training.pdf',bbox_inches='tight')
-    plt.close()
+    plt.show()

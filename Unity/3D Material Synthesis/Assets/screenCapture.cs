@@ -9,11 +9,11 @@ public class screenCapture : MonoBehaviour
     public Material material;
     public List<GameObject> lights; 
 
-    public Vector3[] angles = {
+    Vector3[] angles = {
         new Vector3(45,0,0),
-        new Vector3(135,0,0),
-        new Vector3(45,90,0),
-        new Vector3(45,-90,0)
+        new Vector3(-45,0,0),
+        new Vector3(0,45,0),
+        new Vector3(0,-45,0)
     };
 
     Vector3 pos; 
@@ -64,12 +64,13 @@ public class screenCapture : MonoBehaviour
     {
         DisableLightSources();
 
+        surface.transform.rotation = Quaternion.Euler(0, 0, Random.value * 90);
         for (int i = 0; i < lights.Count; i++)
         {
             lights[i].SetActive(true);
             filename = string.Format("{0}\\texture{1}_{2}_color{3}.png", filepath, ti, ai, i.ToString());
             ScreenCapture.CaptureScreenshot(filename);
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.25f); 
             Debug.Log(filename+" captured.");
             lights[i].SetActive(false);
         }
@@ -80,7 +81,7 @@ public class screenCapture : MonoBehaviour
         material.SetTexture("_BumpMap", null);
         filename = string.Format("{0}\\texture{1}_{2}_normal.png", filepath, ti, ai);
         ScreenCapture.CaptureScreenshot(filename);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         Debug.Log("Done Capturing");
         capturing=false;
     }
