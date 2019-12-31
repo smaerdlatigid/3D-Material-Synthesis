@@ -45,7 +45,7 @@ Format the data and then import the directory `train/Textures/` into Unity
 
     python format_data.py   
 
-Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping). Set the file path before running the "TrainingSamples" scene. Ignore all moments Unity tries to conver the texture type to a normal map. The normal map will be set to the albedo/base map to generate a ground truth label and gets renders in a wierd manner if set to a normal map in the texture settings. 
+Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping). Set the file path before running the "TrainingSamples" scene. Ignore all moments Unity tries to conver the texture type to a normal map. The normal map will be set to the albedo/base map to generate a ground truth label and gets rendered in a wierd manner if set to a normal map in the texture settings. 
 
 ![](Figures/unity_training.gif)
 
@@ -57,7 +57,7 @@ OUTPUT: 1 image 480 x 320 px corresponding to a normal map
 
 ![](Figures/texture_anim.gif)
 
-The architecture of the neural network is rather simple consisting of only a few convolutional layers. The neural network doesn't have to be super complex or require many layers because the input data is so similar to the output.
+The architecture of the neural network consists of a few convolutional layers, it looks more complex than it is due to the multiple inputs. 
 
 ![](Figures/encoder.png)
 
