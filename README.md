@@ -1,5 +1,5 @@
 # 3D Material Synthesis
-Estimate high resolution surface normals from a single view using multiple light sources. This convolutional approach is used to the estimate the surface geometry for photo-realistic rendering. Upload photos from your mobile phone and create materials for Unity3D or Blender.
+Estimate high resolution surface normals from a single view using multiple light sources. A convolutional approach is used to the estimate the surface geometry for photo-realistic rendering. Upload photos from your mobile phone and create materials for Unity3D or Blender.
 
 ## Dependencies 
 - [Unity3D](https://unity.com/)
@@ -62,7 +62,7 @@ The architecture of the neural network consists of a few convolutional layers, i
 
 ![](Figures/encoder.png)
 
-Training was done by optimizing for the mean squared error using Adam with a batch size of 8 images. The neural network was trained with 1500 samples for 20 epochs on a GTX 1070 (total training time ~30 minutes). A total of 12,035 trainable parameters. 
+The training was done by optimizing for the mean squared error using Adam with a batch size of 8 images. The neural network was trained with 1500 samples for 20 epochs on a GTX 1070 (total training time ~30 minutes). A total of 12,035 trainable parameters. 
 
 ![](Figures/normal_training.png)
 
@@ -76,7 +76,7 @@ An LED strip with an arduino can simulate the training environment from Unity. A
 
 ![](Figures/arduino_test1.jpg)
 
-A sequence of picutres from a cell phone can be uploaded for the model to perform inference on
+A sequence of pictures from a cell phone can be uploaded for the model to perform inference on
 
 ```python
 from PIL import Image
