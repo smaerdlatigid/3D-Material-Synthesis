@@ -1,7 +1,10 @@
 # 3D Material Synthesis
 Estimate high resolution surface normals from a single view using multiple light sources and artificial intelligence.
 
-## Generate Training Data with Unity 
+## Dependencies 
+- Unity3D
+- Python 3+ (tensorflow, numpy, Pillow, matplotlib)
+## Generate Photo-Realistic Data with Unity Universal Render Pipeline
 
 4 light sources are placed around a scene to mimic LEDs on a tripod-like structure
 
@@ -68,7 +71,11 @@ Training was done by optimizing for the mean squared error using Adam with a bat
 
 ## Use Cases
 
-Create photo-realistic textures for motion pictures and video games by performing inference on images from your cell phone.
+An LED strip on arduino can easily simulate the training environment from Unity. A pyramid structure is required to stablize a camera and position the LED strip. First light with the Arduino: 
+
+![](Figures/arduino_test1.jpg)
+
+A sequence of picutres from a cell phone can be uploaded for the model to perform inference on
 
 ```python
 from PIL import Image
@@ -90,14 +97,37 @@ if __name__ == "__main__":
     output = encoder.predict([X0,X1,X2,X3])
     
 ```
+The normal maps can then be rendered in Unity with the scene: `TestSample`
 
-An LED strip on arduino can easily simulate the training environment from Unity. Use a camera on a tripod to capture images to perform inference on.
+![](Figures/arduino_test2.jpg)
 
-* Show picture of 2x4 and LED strip
 
-Render the normal map in Unity
+An Arduino Uno with a NeoPixel LED strip is used to capture images with a mobile phone. The 
+LED Strip is: https://www.adafruit.com/product/2562. More information about getting started with the NeoPixel Strip can be found here: https://learn.adafruit.com/adafruit-neopixel-uberguide. The code for the strip is here: 
 
-* photo
+```arduino
+// https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino-library-use
+#include <Adafruit_NeoPixel.h>
+
+#define LED_COUNT 30
+Adafruit_NeoPixel strip(LED_COUNT, A0, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+    Serial.begin(9600);
+    strip.begin();
+    for(int i=0; i<LED_COUNT; i++)
+    {
+        strip.setPixelColor(i,255,255,255);
+    }
+    strip.show();
+    delay(100);
+}
+
+void loop() {
+}
+```
+
+
 
 ## Outstanding Research & Development
 - Improve texture rendering 
@@ -110,6 +140,8 @@ Render the normal map in Unity
     - architecture
     - number of inputs
     - merge layer
+
+- Construct a frame for stablizing capture on phone
 
 ### License
 This software is intended strictly for educational purposes. Please cite this work if you use any of these algorithms for your project. Licensing fees may apply for any use beyond educational purposes, please contact support@digitaldream.io for more information
