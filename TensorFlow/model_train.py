@@ -66,10 +66,10 @@ if __name__ == "__main__":
     
     for i in range(len(images)):
         y[i] = np.asarray(Image.open(images[i]))
-        X0[i] = np.asarray(Image.open(images[i].replace('_normal','_color0')))
-        X1[i] = np.asarray(Image.open(images[i].replace('_normal','_color1')))
-        X2[i] = np.asarray(Image.open(images[i].replace('_normal','_color2')))
-        X3[i] = np.asarray(Image.open(images[i].replace('_normal','_color3')))
+        X0[i] = np.asarray(Image.open(images[i].replace('_normal','_color1')))
+        X1[i] = np.asarray(Image.open(images[i].replace('_normal','_color2')))
+        X2[i] = np.asarray(Image.open(images[i].replace('_normal','_color3')))
+        X3[i] = np.asarray(Image.open(images[i].replace('_normal','_color4')))
     
     # preprocess inputs + outputs
     # subtract average? 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     history = encoder.fit(
         [X0,X1,X2,X3],
         y,
-        epochs=50, 
+        epochs=20, 
         batch_size=8,
         shuffle=True,
         validation_split=0.1,
@@ -91,12 +91,12 @@ if __name__ == "__main__":
 
     encoder.save_weights("encoder_weights.h5")
 
-    
     # Plot training & validation loss values
     f,ax = plt.subplots(1)
     ax.plot(np.log2(history.history['loss']))
     ax.plot(np.log2(history.history['val_loss']))
-    ax.set_ylabel('Loss')
+    ax.set_ylabel(r'Log$_2$(Loss)')
     ax.set_xlabel('Training Epoch')
-    ax.legend(['Train', 'Test'], loc='upper left')
+    ax.grid(True,ls='--')
+    ax.legend(['Train', 'Test'], loc='upper right')
     plt.show()

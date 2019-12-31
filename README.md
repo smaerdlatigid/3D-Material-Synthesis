@@ -56,15 +56,19 @@ OUTPUT: 1 image 480 x 320 px corresponding to a normal map
 
 The architecture of the neural network is rather simple consisting of only a few convolutional layers. The neural network doesn't have to be super complex or require many layers because the input data is so similar to the output.
 
-*image of neural network architecture 
+![](Figures/encoder.png)
 
-Training was done by optimizing for the mean squared error using Adam with a batch size of 8 images. The neural network was trained with 1500 samples for 20 epochs on a GTX 1070 (total training time ~1 hour).
+Training was done by optimizing for the mean squared error using Adam with a batch size of 8 images. The neural network was trained with 1500 samples for 20 epochs on a GTX 1070 (total training time ~30 minutes). A total of 12,035 trainable parameters. 
 
 ![](Figures/normal_training.png)
 
-*color0, truth, prediction, residual mosaic 
+![](Figures/model_validation.png)
 
-The model is built with TensorFlow 2.0
+* show unity comparison
+
+## Use Cases
+
+Create photo-realistic textures for motion pictures and video games by performing inference on images from your cell phone.
 
 ```python
 from PIL import Image
@@ -87,33 +91,25 @@ if __name__ == "__main__":
     
 ```
 
-* show unity comparison
-
-## Real World Application
-
-We are working on building a tripod light structure using a bluetooth controlled arduino and some LED strips in order to mimic our Unity simulation. A mobile app will allow you to run through the lighting sequence on your phone and capture data in the real world similar to how it was set up in Unity. This will allow one to create photo-realistic materials using their cellphone camera and an easy to build light stand. 
+An LED strip on arduino can easily simulate the training environment from Unity. Use a camera on a tripod to capture images to perform inference on.
 
 * Show picture of 2x4 and LED strip
 
-## Use Cases
-- Create photo-realistic textures for motion pictures and video games
-- Estimate a height map from geostationary satellite images by integrating the normal map. Images must be taken hours apart while the sun is at different angles. The algorithm needs to be retrained using a directional light source with the correct geometry based on your location
+Render the normal map in Unity
 
-![]() 
+* photo
 
-Image from the HiRISE instrument on the Mars Reconaissence Orbiter
+## Outstanding Research & Development
+- Improve texture rendering 
+    - higher resolution
+    - curate textures for training
+    - include height as vertex displacement
+    - simulate LED bar
 
-### License
-This software is intended strictly for educational purposes. Please cite this work if you use any of these algorithms for your project. Licensing fees may apply for any use beyond educational purposes, please contact support@digitaldream.io for more information
-
-### Outstanding Research & Development
-- Optimize CNN
+- Optimize the CNN
     - architecture
     - number of inputs
     - merge layer
 
-- improve texture rendering 
-    - higher resolution
-    - curate textures for training
-    - include height map as vertex displacement
-    - simulate LED bar
+### License
+This software is intended strictly for educational purposes. Please cite this work if you use any of these algorithms for your project. Licensing fees may apply for any use beyond educational purposes, please contact support@digitaldream.io for more information

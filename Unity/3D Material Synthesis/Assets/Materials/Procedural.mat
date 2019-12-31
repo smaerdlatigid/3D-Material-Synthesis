@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Procedural
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _NORMALMAP
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,21 +21,21 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: e3023938cf76b434682649f20e266c1b, type: 3}
-        m_Scale: {x: 0.8845193, y: 0.99456906}
-        m_Offset: {x: 0.03435016, y: 0.32022348}
+        m_Texture: {fileID: 2800000, guid: 73307291f4275ec469d0cd5682ba2447, type: 3}
+        m_Scale: {x: 0.95643294, y: 0.93525285}
+        m_Offset: {x: 0.46897823, y: 0.28637412}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 009062f0a4ccee641a1e76025472710f, type: 3}
-        m_Scale: {x: 0.8845193, y: 0.99456906}
-        m_Offset: {x: 0.03435016, y: 0.32022348}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 0.95643294, y: 0.93525285}
+        m_Offset: {x: 0.46897823, y: 0.28637412}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e3023938cf76b434682649f20e266c1b, type: 3}
-        m_Scale: {x: 0.9625126, y: 1.1869638}
-        m_Offset: {x: 0.99942195, y: 0.28882626}
+        m_Texture: {fileID: 2800000, guid: 73307291f4275ec469d0cd5682ba2447, type: 3}
+        m_Scale: {x: 0.95643294, y: 0.93525285}
+        m_Offset: {x: 0.46897823, y: 0.28637412}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
