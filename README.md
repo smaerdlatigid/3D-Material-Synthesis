@@ -71,7 +71,7 @@ Training was done by optimizing for the mean squared error using Adam with a bat
 
 ## Use Cases
 
-An LED strip on arduino can easily simulate the training environment from Unity. A pyramid structure is required to stablize a camera and position the LED strip. First light with the Arduino: 
+An LED strip with an arduino can simulate the training environment from Unity. A pyramid structure is required to stablize a camera and position the LED strip. First light with the Arduino: 
 
 ![](Figures/arduino_test1.jpg)
 
