@@ -24,6 +24,7 @@ def find_links(URL, PATTERN="https://drive"):
     return list(set(urls))
 
 if __name__ == "__main__":
+    '''
     parser = argparse.ArgumentParser()
     help_ = "Load h5 model trained weights"
     parser.add_argument("-d", "--weights", help=help_, default="encoder.h5")
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     help_ = "Pickle file of test samples"
     parser.add_argument("-f", "--test", help=help_)
     args = parser.parse_args()
-
+    '''
     BASE_URL = "https://3dtextures.me/"
     DEPTH_LIMIT = 3
     PATTERN = "https://drive"
