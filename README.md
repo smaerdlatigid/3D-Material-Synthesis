@@ -1,20 +1,21 @@
 # 3D Material Synthesis
-Estimate high resolution surface normals from a single view using multiple light sources and artificial intelligence.
+Estimate high resolution surface normals from a single view using multiple light sources. This convolutional approach is used to the estimate the surface geometry for photo-realistic rendering. Upload photos from your mobile phone and create materials for Unity3D or Blender.
 
 ## Dependencies 
-- Unity3D
-- Python 3+ (tensorflow, numpy, Pillow, matplotlib)
-## Generate Photo-Realistic Data with Unity Universal Render Pipeline
+- [Unity3D](https://unity.com/)
+- [Python 3+](https://www.anaconda.com/distribution/) (tensorflow, numpy, Pillow, matplotlib)
+
+## Generate Data with the [Universal Render Pipeline](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.0/manual/index.html) in Unity3D
 
 4 light sources are placed around a scene to mimic LEDs on a tripod-like structure
 
 ![](Figures/Screenshot.png)
 
-The lights turn on individually and a screenshot is captured for each. These four images are input into a convolutional neural network in order to estimate a normal map.
+The lights turn on individually and a screenshot is captured for each. A labeled data set is created with the simulated images and their corresponding normal map.
 
 ![](Figures/animation.gif)
 
-A labeled data set is created with the simulated images and their corresponding normal map. The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information about normal maps be found here: https://docs.unity3d.com/Manual/StandardShaderMaterialParameterNormalMap.html
+The normal map encodes information about how bumpy or curved the surface is so that light can interact with it in a realistic manner. More information about normal maps be found here: https://docs.unity3d.com/Manual/StandardShaderMaterialParameterNormalMap.html
 
 ![](Figures/NormalSurface.png)
 
@@ -41,11 +42,11 @@ To download folders from a list of google drive links use:
 
     python gdrive_download.py --file download_links.txt --dir train
 
-Format the data and then import the directory `train/Textures/` into Unity
+Format the data and then import the directory `train/Textures/` into Unity `Resources/Textures`
 
     python format_data.py   
 
-Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. warps, rotations, translations and cropping). Set the file path before running the "TrainingSamples" scene. Ignore all moments Unity tries to conver the texture type to a normal map. The normal map will be set to the albedo/base map to generate a ground truth label and gets rendered in a wierd manner if set to a normal map in the texture settings. 
+Use the script `ScreenCapture.cs` within Unity to generate training samples for a CNN. The training data is augmented within Unity to account for different perspectives & small distortions (e.g. rotations, translations and cropping). Set the file path before running the "TrainingSamples" scene. Ignore all moments Unity tries to convert the texture type to a normal map. The normal map will be set to the albedo/base map in order to generate a ground truth label. The rendering is wierd when generating a ground-truth if the normal map texture type is set to "normal map", just keep it as "default". 
 
 ![](Figures/unity_training.gif)
 
@@ -71,7 +72,7 @@ Training was done by optimizing for the mean squared error using Adam with a bat
 
 ## Use Cases
 
-An LED strip with an arduino can simulate the training environment from Unity. A pyramid structure is required to stablize a camera and position the LED strip. First light with the Arduino: 
+An LED strip with an arduino can simulate the training environment from Unity. A pyramid structure is required to stablize a camera and position the LED strip. A tutorial for how to construct a PVC frame is coming soon... Here is the first light with the Arduino: 
 
 ![](Figures/arduino_test1.jpg)
 
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     output = encoder.predict([X0,X1,X2,X3])
     
 ```
-The normal maps can then be rendered in Unity with the scene: `TestSample`
+The normal maps can then be rendered in Unity by creating a new material and setting the Base Map and Normal Map fields
 
 ![](Figures/arduino_test2.jpg)
 
