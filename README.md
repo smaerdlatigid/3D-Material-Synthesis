@@ -79,13 +79,15 @@ An LED strip with an arduino can simulate the training environment from Unity. A
 A sequence of pictures from a cell phone can be uploaded for the model to perform inference on
 
 ```python
+import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from model_train import build_cnn_encoder
 
 if __name__ == "__main__":
-
-    img = np.asarray(Image.open("test.jpg"))
+    filepath = "test\\UnitySamples\\"
+    images = glob.glob(filepath+"*normal.png")
+    img = Image.open(np.random.choice(images))
 
     encoder = build_cnn_encoder( 
         input_dims=[(img.size[1],img.size[0],3)]*4, 
@@ -94,9 +96,14 @@ if __name__ == "__main__":
         output_dim=(img.size[1],img.size[0],3)
     )
 
+    inputs = []
+    for i in range(4):
+        fname = img.filename.replace("normal","color{}".format(i+1))
+        image = Image.open(fname)
+        inputs.append(np.expand_dims(image,0))
+
     encoder.load_weights("encoder_weights.h5") 
-    output = encoder.predict([X0,X1,X2,X3])
-    
+    output = encoder.predict(inputs)
 ```
 The normal maps can then be rendered in Unity by creating a new material and setting the Base Map and Normal Map fields
 

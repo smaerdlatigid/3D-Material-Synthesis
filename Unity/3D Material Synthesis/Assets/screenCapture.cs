@@ -10,10 +10,10 @@ public class screenCapture : MonoBehaviour
     public List<GameObject> lights; 
 
     Vector3[] angles = {
-        new Vector3(45,0,0),
-        new Vector3(-45,0,0),
-        new Vector3(0,45,0),
-        new Vector3(0,-45,0)
+        new Vector3(35,0,0),
+        new Vector3(-35,0,0),
+        new Vector3(0,35,0),
+        new Vector3(0,-35,0)
     };
 
     Vector3 pos; 
@@ -53,11 +53,11 @@ public class screenCapture : MonoBehaviour
         }
     }
 
-    public string filepath = "C:\\Users\\Kyle\\Programs\\github\\PhotoMaterialSynthesis\\TensorFlow\\train\\UnitySamples";
+    public string filepath = "C:\\Users\\Kyle\\Programs\\github\\PhotoMaterialSynthesis\\TensorFlow\\test\\UnitySamples";
     string filename;
     bool capturing = false;
     int ti = 0;
-    int augmentations = 10;
+    int augmentations = 2;
     int ai = -1;
 
     IEnumerator CaptureSequence()

@@ -253,7 +253,7 @@ MonoBehaviour:
   surface: {fileID: 1267733378}
   material: {fileID: 2100000, guid: a2f3cb106b9a28d48b59833eaec1ee88, type: 2}
   lights: []
-  filepath: C:\Users\Kyle\Programs\github\PhotoMaterialSynthesis\TensorFlow\train\UnitySamples
+  filepath: C:\Users\Kyle\Programs\github\PhotoMaterialSynthesis\TensorFlow\test\UnitySamples
 --- !u!1 &437921879
 GameObject:
   m_ObjectHideFlags: 0

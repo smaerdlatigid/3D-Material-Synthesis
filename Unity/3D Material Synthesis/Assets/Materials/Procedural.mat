@@ -21,13 +21,13 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 73307291f4275ec469d0cd5682ba2447, type: 3}
-        m_Scale: {x: 0.95643294, y: 0.93525285}
-        m_Offset: {x: 0.46897823, y: 0.28637412}
+        m_Texture: {fileID: 2800000, guid: af485d77ef0ccea47a51220aecafa877, type: 3}
+        m_Scale: {x: 0.7666317, y: 1.1447045}
+        m_Offset: {x: 0.7860551, y: 0.23562434}
     - _BumpMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0.95643294, y: 0.93525285}
-        m_Offset: {x: 0.46897823, y: 0.28637412}
+        m_Scale: {x: 0.7666317, y: 1.1447045}
+        m_Offset: {x: 0.7860551, y: 0.23562434}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
